@@ -9,7 +9,7 @@
       </div>
      
       <div class="row">
-        <q-btn flat icon="mdi-chat" />
+        <chat/>
         <q-btn flat icon="person">
           <q-menu>
             <q-list style="min-width: 100px">
@@ -87,16 +87,23 @@
   </div>
 </template>
 
-<script>
-import { ref } from 'vue'
+<script setup>
+import { ref } from 'vue';
+import Chat from 'src/components/Chat.vue' // Ajusta la ruta según la ubicación real de Chat.vue
 
-const search = ref("")
+
+
+// Definición de estados reactivos
+const text = ref('');
+const dialog = ref(false);
+const maximizedToggle = ref(true);
+
+const search = ref('');
 
 const menuList = [
   {
     icon: 'business_center',
     label: 'Empresas',
-    href: "enterprises", 
     separator: false 
   },
   {
@@ -115,16 +122,9 @@ const menuList = [
     label: 'Logout',
     separator: false
   }
-]
+];
 
-export default {
-  setup () {
-    return {
-      drawer: ref(false),
-      search,
-      menuList
-    }
-  }
-}
+// Definición de `drawer`
+const drawer = ref(false);
 </script>
 
