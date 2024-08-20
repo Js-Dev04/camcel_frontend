@@ -55,28 +55,28 @@
       bordered
       :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
     >
-      <q-scroll-area class="fit">
-        <q-list>
+    <q-scroll-area
+        
+        style="
+          height: calc(100% - 150px);
+          
+          
+        "
+      >
+        <q-list padding>
+          <q-item clickable v-ripple v-for="(boton , index) in botones"
+          :key="index"  @click="pagina(boton.pagina)">
+            <q-item-section  avatar>
+              <q-icon  :name="boton.icono" />
+            </q-item-section>
 
-          <template v-for="(menuItem, index) in menuList" :key="index">
-            <q-item clickable v-ripple>
-              <q-btn
-                :to="{ name: menuItem.href }"
-                flat
-               >
-                <q-item-section avatar>
-                  <q-icon :name="menuItem.icon" />
-                </q-item-section>
-                <q-item-section>
-                  {{menuItem.label}}
-                </q-item-section>
-              </q-btn>
-            </q-item>
-            <q-separator :key="'sep' + index"  v-if="menuItem.separator" />
-          </template>
-
+            <q-item-section > {{ boton.nombre }} </q-item-section>
+          </q-item>
         </q-list>
+          
       </q-scroll-area>
+
+      
     </q-drawer>
 
     <q-page-container>
@@ -90,16 +90,27 @@
 <script setup>
 import { ref } from 'vue';
 import Chat from 'src/components/Chat.vue' // Ajusta la ruta según la ubicación real de Chat.vue
+import { useRouter } from "vue-router"
 
 
-
+const router = useRouter()
 // Definición de estados reactivos
 const text = ref('');
 const dialog = ref(false);
 const maximizedToggle = ref(true);
 
 const search = ref('');
-
+const botones = ref([
+    {nombre:"Empresas",icono:"mdi-office-building-cog-outline",pagina:"/" },
+    {nombre:"Documentos",icono:"mdi-file",pagina:"/documentos" },
+    {nombre:"His.Trabajo",icono:"mdi-folder-multiple",pagina:"/his.trabajo" },
+    {nombre:"Calendario",icono:"mdi-calendar",pagina:"/calendario" },
+    {nombre:"Soporte",icono:"mdi-cog-outline",pagina:"/soporte" },
+    
+  ])
+  const pagina =(e)=>{
+    router.push(e)
+  }
 const menuList = [
   {
     icon: 'business_center',
